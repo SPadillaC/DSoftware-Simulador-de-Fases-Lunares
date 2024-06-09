@@ -30,10 +30,7 @@ El "Simulador de Fases Lunares" es una aplicación diseñada para calcular y vis
     ```sh
     git clone https://github.com/SPadillaC/DSoftware-Simulador-de-Fases-Lunares.git
     ```
-2. Navega al directorio del proyecto.
-    ```sh
-    cd DSoftware-Simulador-de-Fases-Lunares
-    ```
+2. Navega al directorio donde deseas utilizar el proyecto.
 3. Instala la biblioteca `ephem`.
     ```sh
     pip install ephem

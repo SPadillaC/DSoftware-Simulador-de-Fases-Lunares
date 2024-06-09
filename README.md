@@ -41,6 +41,7 @@ El "Simulador de Fases Lunares" es una aplicación diseñada para calcular y vis
 
 ## Estructura del Proyecto
 
+```css
 simulador_fases_lunares/
 │
 ├── simulador/
@@ -49,9 +50,10 @@ simulador_fases_lunares/
 │ ├── datos_lunares.py
 │
 └── main.py
+```
 
 - **`simulador/__init__.py`**: Archivo de inicialización del paquete que permite importar las funciones del módulo.
-- **`simulador/observador.py`**: Contiene la función `crear_observador` que configura el observador con la fecha y ubicación especificadas.
+- **`simulador/observador.py`**: Contiene la función `crear_observador` que configura el observador con la fecha y ubicación especificadas. Por defecto, San Bernardo, RM.
 - **`simulador/datos_lunares.py`**: Contiene la función `calcular_fase_lunar` que calcula la fase lunar y otros datos relevantes.
 - **`main.py`**: Script principal que solicita una fecha y hora al usuario, utiliza las funciones del paquete `simulador` para calcular los datos lunares y luego imprime los resultados.
 

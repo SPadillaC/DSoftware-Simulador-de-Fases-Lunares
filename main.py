@@ -1,7 +1,19 @@
+import sys
+import os
+
+# Ajuste para Jupyter Notebook
+if '__file__' not in globals():
+    # Si estamos en un entorno interactivo (Jupyter Notebook)
+    current_dir = os.getcwd()
+else:
+    # Si estamos en un script normal
+    current_dir = os.path.dirname(__file__)
+
+sys.path.insert(0, os.path.abspath(os.path.join(current_dir, 'src')))
+
 from datetime import datetime
-from simulador.observador import crear_observador
-from simulador.datos_lunares import calcular_fase_lunar
-# 2024-06-01 20:00:00
+from simulador_fases_lunares.observador import crear_observador
+from simulador_fases_lunares.datos_lunares import calcular_fase_lunar
 
 def solicitar_fecha_hora():
     while True:

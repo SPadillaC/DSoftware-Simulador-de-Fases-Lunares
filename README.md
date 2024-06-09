@@ -13,7 +13,6 @@ El "Simulador de Fases Lunares" es una aplicación diseñada para calcular y vis
 
 ## Funcionalidades
 
-- Calcular la fase lunar en una fecha y hora especificadas.
 - Mostrar la constelación en la que se encuentra la luna.
 - Mostrar la magnitud aparente de la luna.
 - Mostrar la distancia de la luna a la Tierra en kilómetros.
@@ -41,18 +40,29 @@ El "Simulador de Fases Lunares" es una aplicación diseñada para calcular y vis
 ```css
 simulador_fases_lunares/
 │
-├── simulador/
+├── src/
+│ └── simulador_fases_lunares/
 │ ├── init.py
 │ ├── observador.py
 │ ├── datos_lunares.py
 │
+├── tests/
+│ ├── init.py
+│ ├── test_datos_lunares.py
+│ ├── test_observador.py
+│
+├── LICENSE
+├── README.md
+├── pyproject.toml
+├── setup.cfg
 └── main.py
 ```
 
-- **`simulador/__init__.py`**: Archivo de inicialización del paquete que permite importar las funciones del módulo.
-- **`simulador/observador.py`**: Contiene la función `crear_observador` que configura el observador con la fecha y ubicación especificadas. Por defecto, San Bernardo, RM.
-- **`simulador/datos_lunares.py`**: Contiene la función `calcular_fase_lunar` que calcula la fase lunar y otros datos relevantes.
-- **`main.py`**: Script principal que solicita una fecha y hora al usuario, utiliza las funciones del paquete `simulador` para calcular los datos lunares y luego imprime los resultados.
+- **`src/simulador_fases_lunares/__init__.py`**: Archivo de inicialización del paquete que permite importar las funciones del módulo.
+- **`src/simulador_fases_lunares/observador.py`**: Contiene la función `crear_observador` que configura el observador con la fecha y ubicación especificadas.
+- **`src/simulador_fases_lunares/datos_lunares.py`**: Contiene la función `calcular_fase_lunar` que calcula la fase lunar y otros datos relevantes.
+- **`tests/test_observador.py`**: Pruebas unitarias para `crear_observador`.
+- **`tests/test_datos_lunares.py`**: Pruebas unitarias para `calcular_fase_lunar`.
 
 ## Uso
 
@@ -75,3 +85,7 @@ Fase: 26.62%
 Siguiente Luna Nueva: 2024/6/6 12:37:41
 Siguiente Luna Llena: 2024/6/22 01:07:49
 ```
+
+## Licencia
+
+Este proyecto está licenciado bajo la Licencia MIT. Consulta el archivo LICENSE para más detalles.

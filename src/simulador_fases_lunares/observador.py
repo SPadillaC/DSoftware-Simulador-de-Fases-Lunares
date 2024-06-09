@@ -1,5 +1,3 @@
-# observador.py
-
 import ephem
 
 def crear_observador(fecha_hora):

@@ -1,5 +1,3 @@
-# datos_lunares.py
-
 import ephem
 
 def calcular_fase_lunar(observador):

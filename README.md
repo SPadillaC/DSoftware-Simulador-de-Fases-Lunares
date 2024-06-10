@@ -26,11 +26,14 @@ El "Simulador de Fases Lunares" es una aplicación diseñada para calcular y vis
 ## Instalación
 
 1. Clona este repositorio en tu máquina local.
+
     ```sh
     git clone https://github.com/SPadillaC/DSoftware-Simulador-de-Fases-Lunares.git
     ```
+
 2. Navega al directorio donde deseas utilizar el proyecto.
 3. Instala la biblioteca `ephem`.
+
     ```sh
     pip install ephem
     ```
@@ -67,9 +70,11 @@ simulador_fases_lunares/
 ## Uso
 
 1. Ejecuta el script principal `main.py`.
+
     ```sh
     python main.py
     ```
+
 2. Ingresa la fecha y hora en el formato solicitado (AAAA-MM-DD HH:MM:SS).
 3. El programa calculará y mostrará la constelación, magnitud, distancia en kilómetros, fase lunar en porcentaje, y las fechas de la siguiente luna nueva y llena.
 

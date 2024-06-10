@@ -12,8 +12,8 @@ else:
 sys.path.insert(0, os.path.abspath(os.path.join(current_dir, 'src')))
 
 from datetime import datetime
-from simulador_fases_lunares.observador import crear_observador
-from simulador_fases_lunares.datos_lunares import calcular_fase_lunar
+from simulador_fases_lunares.observador import crear_observador # type: ignore
+from simulador_fases_lunares.datos_lunares import calcular_fase_lunar # type: ignore
 
 def solicitar_fecha_hora():
     while True:

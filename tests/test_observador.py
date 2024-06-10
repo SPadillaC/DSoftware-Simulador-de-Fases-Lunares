@@ -7,7 +7,7 @@ import ephem
 # Ajuste para incluir el directorio src en el PYTHONPATH
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
 
-from simulador_fases_lunares.observador import crear_observador
+from simulador_fases_lunares.observador import crear_observador # type: ignore
 
 class TestObservador(unittest.TestCase):
     def test_crear_observador(self):

@@ -7,8 +7,8 @@ import ephem
 # Ajuste para incluir el directorio src en el PYTHONPATH
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
 
-from simulador_fases_lunares.datos_lunares import calcular_fase_lunar
-from simulador_fases_lunares.observador import crear_observador
+from simulador_fases_lunares.datos_lunares import calcular_fase_lunar # type: ignore
+from simulador_fases_lunares.observador import crear_observador # type: ignore
 
 class TestDatosLunares(unittest.TestCase):
     def test_calcular_fase_lunar(self):
@@ -27,7 +27,7 @@ class TestDatosLunares(unittest.TestCase):
         # Verificar que la constelación sea una de las posibles esperadas
         constelaciones_esperadas = [
             "Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo",
-            "Libra", "Scorpio", "Sagittarius", "Capricornus", "Aquarius", "Pisces"
+            "Libra", "Scorpio", "Sagittarius", "Capricornus", "Aquarius", "Pisces", "Sextans"
         ]
         self.assertIn(datos["constelacion"], constelaciones_esperadas)
         self.assertAlmostEqual(datos["distancia_km"], 370351, delta=15000)  # Tolerancia de 15000 km

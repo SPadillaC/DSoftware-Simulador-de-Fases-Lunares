@@ -22,6 +22,7 @@ El "Simulador de Fases Lunares" es una aplicación diseñada para calcular y vis
 
 - Python 3.x
 - Biblioteca `ephem`
+- Biblioteca `streamlit`
 
 ## Instalación
 
@@ -32,27 +33,26 @@ El "Simulador de Fases Lunares" es una aplicación diseñada para calcular y vis
     ```
 
 2. Navega al directorio donde deseas utilizar el proyecto.
-3. Instala la biblioteca `ephem`.
+3. Instala las bibliotecas necesarias.
 
     ```sh
-    pip install ephem
+    pip install ephem streamlit
     ```
 
 ## Estructura del Proyecto
 
-```css
+```plaintext
 simulador_fases_lunares/
 │
 ├── src/
-│ └── simulador_fases_lunares/
-│ ├── init.py
-│ ├── observador.py
-│ ├── datos_lunares.py
+│   └── simulador_fases_lunares/
+│       ├── __init__.py
+│       ├── observador.py
+│       └── datos_lunares.py
 │
 ├── tests/
-│ ├── init.py
-│ ├── test_datos_lunares.py
-│ ├── test_observador.py
+│   ├── __init__.py
+│   └── test.py
 │
 ├── LICENSE
 ├── README.md
@@ -64,32 +64,18 @@ simulador_fases_lunares/
 - **`src/simulador_fases_lunares/__init__.py`**: Archivo de inicialización del paquete que permite importar las funciones del módulo.
 - **`src/simulador_fases_lunares/observador.py`**: Contiene la función `crear_observador` que configura el observador con la fecha y ubicación especificadas.
 - **`src/simulador_fases_lunares/datos_lunares.py`**: Contiene la función `calcular_fase_lunar` que calcula la fase lunar y otros datos relevantes.
-- **`tests/test_observador.py`**: Pruebas unitarias para `crear_observador`.
-- **`tests/test_datos_lunares.py`**: Pruebas unitarias para `calcular_fase_lunar`.
+- **`tests/test.py`**: Pruebas unitarias para las funciones del proyecto.
 
 ## Uso
 
 1. Ejecuta el script principal `main.py`.
 
     ```sh
-    python main.py
+    streamlit run main.py
     ```
 
-2. Ingresa la fecha y hora en el formato solicitado (AAAA-MM-DD HH:MM:SS).
+2. Ingresa la fecha y hora usando los controles en la interfaz.
 3. El programa calculará y mostrará la constelación, magnitud, distancia en kilómetros, fase lunar en porcentaje, y las fechas de la siguiente luna nueva y llena.
-
-## Ejemplo de Uso
-
-```sh
-$ python main.py
-Ingrese la fecha y hora (AAAA-MM-DD HH:MM:SS): 2024-06-01 20:00:00
-Constelación: Pisces
-Magnitud: -11.29
-Distancia: 370351 km
-Fase: 26.62%
-Siguiente Luna Nueva: 2024/6/6 12:37:41
-Siguiente Luna Llena: 2024/6/22 01:07:49
-```
 
 ## Licencia
 

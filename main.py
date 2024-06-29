@@ -1,46 +1,43 @@
-import sys
-import os
-
-# Ajuste para Jupyter Notebook
-if '__file__' not in globals():
-    # Si estamos en un entorno interactivo (Jupyter Notebook)
-    current_dir = os.getcwd()
-else:
-    # Si estamos en un script normal
-    current_dir = os.path.dirname(__file__)
-
-sys.path.insert(0, os.path.abspath(os.path.join(current_dir, 'src')))
-
+import streamlit as st
 from datetime import datetime
-from simulador_fases_lunares.observador import crear_observador # type: ignore
-from simulador_fases_lunares.datos_lunares import calcular_fase_lunar # type: ignore
-
-def solicitar_fecha_hora():
-    while True:
-        fecha_hora_entrada = input("Ingrese la fecha y hora (AAAA-MM-DD HH:MM:SS): ")
-        try:
-            dt = datetime.strptime(fecha_hora_entrada, "%Y-%m-%d %H:%M:%S")
-            return dt
-        except ValueError:
-            print("Formato de fecha y hora incorrecto. Por favor, intente nuevamente.")
+from src.simulador_fases_lunares.observador import crear_observador
+from src.simulador_fases_lunares.datos_lunares import calcular_fase_lunar
 
 def main():
-    # Solicitar fecha y hora al usuario
-    dt = solicitar_fecha_hora()
-    
-    # Crear el observador
-    observador = crear_observador(dt)
-    
-    # Calcular las fases lunares y obtener los datos
-    datos_lunares = calcular_fase_lunar(observador)
-    
-    # Imprimir los resultados en el orden solicitado
-    print(f"Constelación: {datos_lunares['constelacion']}")
-    print(f"Magnitud: {datos_lunares['magnitud']}")
-    print(f"Distancia: {datos_lunares['distancia_km']:.0f} km")
-    print(f"Fase: {datos_lunares['fase']:.2f}%")
-    print(f"Siguiente Luna Nueva: {datos_lunares['siguiente_luna_nueva']}")
-    print(f"Siguiente Luna Llena: {datos_lunares['siguiente_luna_llena']}")
+    if 'initialized' not in st.session_state:
+        now = datetime.now()
+        st.session_state.update({
+            'year': now.year,
+            'month': now.month,
+            'day': now.day,
+            'hour': now.hour,
+            'minute': now.minute,
+            'second': now.second,
+            'initialized': True
+        })
+
+    st.title("Simulador de Fases Lunares")
+
+    year = st.slider("Año", 2020, 2030, st.session_state['year'])
+    month = st.slider("Mes", 1, 12, st.session_state['month'])
+    day = st.slider("Día", 1, 31, st.session_state['day'])
+    hour = st.slider("Hora", 0, 23, st.session_state['hour'])
+    minute = st.slider("Minutos", 0, 59, st.session_state['minute'])
+    second = st.slider("Segundos", 0, 59, st.session_state['second'])
+
+    fecha_hora = datetime(year, month, day, hour, minute, second)
+    st.write(f"Fecha y hora seleccionada: {fecha_hora}")
+
+    if st.button("Calcular Fase Lunar"):
+        observador = crear_observador(fecha_hora)
+        datos_lunares = calcular_fase_lunar(observador)
+
+        st.write(f"Constelación: {datos_lunares['constelacion']}")
+        st.write(f"Magnitud: {datos_lunares['magnitud']}")
+        st.write(f"Distancia: {datos_lunares['distancia_km']:.0f} km")
+        st.write(f"Fase: {datos_lunares['fase']:.2f}%")
+        st.write(f"Siguiente Luna Nueva: {datos_lunares['siguiente_luna_nueva']}")
+        st.write(f"Siguiente Luna Llena: {datos_lunares['siguiente_luna_llena']}")
 
 if __name__ == "__main__":
     main()

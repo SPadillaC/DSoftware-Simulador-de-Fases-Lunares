@@ -17,12 +17,14 @@ El "Simulador de Fases Lunares" es una aplicación diseñada para calcular y vis
 - Mostrar la magnitud aparente de la luna.
 - Mostrar la distancia de la luna a la Tierra en kilómetros.
 - Mostrar las fechas de las próximas lunas nueva y llena.
+- **Visualizar la fase lunar actual con una imagen representativa.**
 
 ## Requisitos
 
 - Python 3.x
 - Biblioteca `ephem`
 - Biblioteca `streamlit`
+- **Imágenes de las fases lunares**: Las imágenes en formato `.jpg` deben estar ubicadas en `src/imagenes_fases/`.
 
 ## Instalación
 
@@ -45,10 +47,21 @@ El "Simulador de Fases Lunares" es una aplicación diseñada para calcular y vis
 simulador_fases_lunares/
 │
 ├── src/
-│   └── simulador_fases_lunares/
-│       ├── __init__.py
-│       ├── observador.py
-│       └── datos_lunares.py
+│   ├── simulador_fases_lunares/
+│   │   ├── __init__.py
+│   │   ├── observador.py
+│   │   ├── datos_lunares.py
+│   │   └── visualizacion_fase_lunar.py
+│   └── imagenes_fases/
+│       ├── luna_nueva.jpg
+│       ├── creciente_iluminante.jpg
+│       ├── cuarto_creciente.jpg
+│       ├── gibosa_creciente.jpg
+│       ├── luna_llena.jpg
+│       ├── gibosa_menguante.jpg
+│       ├── cuarto_menguante.jpg
+│       ├── creciente_menguante.jpg
+│       └── fase_desconocida.jpg
 │
 ├── tests/
 │   ├── __init__.py

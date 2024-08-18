@@ -2,6 +2,7 @@ import streamlit as st
 from datetime import datetime
 from src.simulador_fases_lunares.observador import crear_observador
 from src.simulador_fases_lunares.datos_lunares import calcular_fase_lunar
+from src.simulador_fases_lunares.visualizacion_fase_lunar import mostrar_imagen_fase
 
 def main():
     if 'initialized' not in st.session_state:
@@ -32,10 +33,13 @@ def main():
         observador = crear_observador(fecha_hora)
         datos_lunares = calcular_fase_lunar(observador)
 
+        # Mostrar la imagen de la fase lunar primero y con tamaño reducido
+        mostrar_imagen_fase(datos_lunares['nombre_fase_lunar'], width=300)  # Ajusta el ancho según sea necesario
+
+        st.write(f"Fase Lunar Actual: {datos_lunares['nombre_fase_lunar']}")
         st.write(f"Constelación: {datos_lunares['constelacion']}")
         st.write(f"Magnitud: {datos_lunares['magnitud']}")
         st.write(f"Distancia: {datos_lunares['distancia_km']:.0f} km")
-        st.write(f"Fase: {datos_lunares['fase']:.2f}%")
         st.write(f"Siguiente Luna Nueva: {datos_lunares['siguiente_luna_nueva']}")
         st.write(f"Siguiente Luna Llena: {datos_lunares['siguiente_luna_llena']}")
 

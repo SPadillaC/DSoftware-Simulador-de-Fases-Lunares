@@ -1,2 +1,3 @@
 from .observador import crear_observador
-from .datos_lunares import calcular_fase_lunar
+from .datos_lunares import calcular_fase_lunar, obtener_fase_lunar
+from .visualizacion_fase_lunar import obtener_imagen_fase, mostrar_imagen_fase

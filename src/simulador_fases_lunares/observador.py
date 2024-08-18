@@ -1,6 +1,6 @@
 import ephem
 
-def crear_observador(fecha_hora):
+def crear_observador(fecha_hora: str, lat: str = '-33.59217', lon: str = '-70.6996') -> ephem.Observer:
     observador = ephem.Observer()
     try:
         observador.date = fecha_hora

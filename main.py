@@ -29,17 +29,18 @@ def main():
     # Título de la aplicación
     st.title("Simulador de Fases Lunares")
 
-    # Deslizadores para seleccionar año, mes, día, hora, minuto y segundo
-    year = st.slider("Año", 2020, 2030, st.session_state['year'])
-    month = st.slider("Mes", 1, 12, st.session_state['month'])
+    # Deslizadores para seleccionar día, mes, año, hora, minuto y segundo
     day = st.slider("Día", 1, 31, st.session_state['day'])
+    month = st.slider("Mes", 1, 12, st.session_state['month'])
+    year = st.slider("Año", 2020, 2030, st.session_state['year'])
     hour = st.slider("Hora", 0, 23, st.session_state['hour'])
     minute = st.slider("Minutos", 0, 59, st.session_state['minute'])
     second = st.slider("Segundos", 0, 59, st.session_state['second'])
 
     # Crear un objeto datetime a partir de los valores seleccionados
     fecha_hora = datetime(year, month, day, hour, minute, second)
-    st.write(f"Fecha y hora seleccionada: {fecha_hora}")
+    # Mostrar la fecha y hora seleccionada en formato dd/mm/aa, hh:mm/ss
+    st.write(f"Fecha y hora seleccionada: {fecha_hora.strftime('%d/%m/%y, %H:%M:%S')}")
 
     # Botón para calcular la fase lunar
     if st.button("Calcular Fase Lunar"):

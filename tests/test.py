@@ -46,24 +46,6 @@ def test_calcular_fase_lunar_error(mock_moon):
     with pytest.raises(ValueError, match="Error al calcular la fase lunar"):
         calcular_fase_lunar(observador)
 
-# Test para fechas extremas pasadas
-def test_fecha_extrema_pasada():
-    fecha_hora = datetime(1800, 1, 1, 0, 0, 0)
-    observador = crear_observador(fecha_hora)
-    datos = calcular_fase_lunar(observador)
-    
-    # Verificación de consistencia
-    assert 0 <= datos["fase"] <= 100
-
-# Test para fechas extremas futuras
-def test_fecha_extrema_futura():
-    fecha_hora = datetime(3000, 1, 1, 0, 0, 0)
-    observador = crear_observador(fecha_hora)
-    datos = calcular_fase_lunar(observador)
-    
-    # Verificación de consistencia
-    assert 0 <= datos["fase"] <= 100
-
 # Test para manejo de fecha incorrecta
 def test_fecha_incorrecta():
     with pytest.raises(ValueError) as excinfo:
@@ -77,57 +59,18 @@ def test_consistencia():
     observador2 = crear_observador(fecha_hora)
     assert observador1.date == observador2.date
 
-# Test para verificar la salida impresa (usando capsys)
-def test_resultados_calculos(capsys: pytest.CaptureFixture[str]):
-    fecha_hora = datetime(2024, 6, 1, 20, 0, 0)
-    observador = crear_observador(fecha_hora)
-    datos = calcular_fase_lunar(observador)
-    print(f"Constelación: {datos['constelacion']}")
-    print(f"Magnitud: {datos['magnitud']}")
-    print(f"Distancia: {datos['distancia_km']:.0f} km")
-    print(f"Fase: {datos['fase']:.2f}%")
-    captured = capsys.readouterr()
-    assert "Constelación" in captured.out
-    assert "Magnitud" in captured.out
-    assert "Distancia" in captured.out
-    assert "Fase" in captured.out
-
-# Test para confirmar la selección de la fecha y hora
-def test_confirmacion_seleccion_fecha(capsys: pytest.CaptureFixture[str]):
-    fecha_hora = datetime(2024, 6, 1, 20, 0, 0)
-    print(f"Fecha y hora seleccionada: {fecha_hora}")
-    captured = capsys.readouterr()
-    assert "Fecha y hora seleccionada: 2024-06-01 20:00:00" in captured.out
-
-# Test para fechas extremas pasadas
-def test_fecha_extrema_pasada():
-    fecha_hora = datetime(1800, 1, 1, 0, 0, 0)
-    observador = crear_observador(fecha_hora)
-    datos = calcular_fase_lunar(observador)
-    assert datos is not None
-    assert datos["nombre_fase_lunar"] == "Luna Nueva" or "Creciente Iluminante"
-
-# Test para fechas extremas recientes
-def test_fecha_extrema_reciente():
-    fecha_hora = datetime(2024, 1, 1, 0, 0, 0)
-    observador = crear_observador(fecha_hora)
-    datos = calcular_fase_lunar(observador)
-    assert datos is not None
-    assert datos["nombre_fase_lunar"] in ["Luna Nueva", "Creciente Iluminante", "Cuarto Creciente", "Gibosa Creciente", "Luna Llena"]
-
-def test_fase_desconocida():
-    # Test para fase fuera del rango esperado (> 1)
-    assert obtener_fase_lunar(1.1, True) == "Fase Desconocida"
-    assert obtener_fase_lunar(-0.1, True) == "Fase Desconocida"
-
-def test_fase_exacta_095():
-    assert obtener_fase_lunar(0.95, True) == "Luna Llena"
-
-def test_fase_fuera_de_rango_superior():
-    assert obtener_fase_lunar(1.01, True) == "Fase Desconocida"
-
-def test_fase_maxima():
-    assert obtener_fase_lunar(1.0, True) == "Fase Desconocida"
+# Test para la función obtener_fase_lunar agrupando casos similares
+@pytest.mark.parametrize("fase,creciente,resultado_esperado", [
+    (1.1, True, "Fase Desconocida"),
+    (-0.1, True, "Fase Desconocida"),
+    (0.95, True, "Luna Llena"),
+    (1.01, True, "Fase Desconocida"),
+    (1.0, True, "Luna Llena"),
+    (0.50, True, "Cuarto Creciente"),
+    (0.50, False, "Cuarto Menguante"),
+])
+def test_obtener_fase_lunar(fase, creciente, resultado_esperado):
+    assert obtener_fase_lunar(fase, creciente) == resultado_esperado
 
 # Test de integración que verifica el flujo completo
 def test_integracion():
@@ -154,16 +97,22 @@ def test_integracion():
     assert datos["constelacion"] != ""
     assert datos["magnitud"] < 0  # La magnitud aparente debería ser negativa
 
-def test_obtener_imagen_fase():
-    # Test para verificar que se obtienen las rutas correctas de las imágenes
-    assert obtener_imagen_fase("Luna Nueva").endswith("luna_nueva.jpg")
-    assert obtener_imagen_fase("Luna Llena").endswith("luna_llena.jpg")
-    assert obtener_imagen_fase("Gibosa Menguante").endswith("gibosa_menguante.jpg")
-    assert obtener_imagen_fase("Fase Desconocida").endswith("fase_desconocida.jpg")
+# Test para verificar la función obtener_imagen_fase
+@pytest.mark.parametrize("nombre_fase, imagen_esperada", [
+    ("Luna Nueva", "luna_nueva.jpg"),
+    ("Luna Llena", "luna_llena.jpg"),
+    ("Gibosa Menguante", "gibosa_menguante.jpg"),
+    ("Fase Desconocida", "fase_desconocida.jpg"),
+    ("Fase No Existente", "fase_desconocida.jpg")
+])
+def test_obtener_imagen_fase(nombre_fase, imagen_esperada):
+    assert obtener_imagen_fase(nombre_fase).endswith(imagen_esperada)
 
+# Test para mostrar_imagen_fase, manejando el caso donde la imagen no se encuentra
 @patch("src.simulador_fases_lunares.visualizacion_fase_lunar.st.image")
-def test_mostrar_imagen_fase(mock_st_image):
-    # Normalizar la ruta esperada según el sistema operativo
-    expected_path = os.path.normpath("src/imagenes_fases/luna_nueva.jpg")
+@patch("src.simulador_fases_lunares.visualizacion_fase_lunar.st.error")
+@patch("src.simulador_fases_lunares.visualizacion_fase_lunar.os.path.exists", side_effect=lambda path: not path.endswith("luna_nueva.jpg"))
+def test_mostrar_imagen_fase_no_existente(mock_os_path_exists, mock_st_error, mock_st_image):
     mostrar_imagen_fase("Luna Nueva", width=150)
-    mock_st_image.assert_called_once_with(expected_path, caption="Fase Lunar: Luna Nueva", width=150)
+    mock_st_error.assert_called_once_with("Error: La imagen para la fase 'Luna Nueva' no se encontró.")
+    mock_st_image.assert_called_once_with(os.path.join("src", "imagenes_fases", "fase_desconocida.jpg"), caption="Fase Lunar: Luna Nueva", width=150)

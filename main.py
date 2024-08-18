@@ -37,6 +37,7 @@ def main():
         mostrar_imagen_fase(datos_lunares['nombre_fase_lunar'], width=300)  # Ajusta el ancho según sea necesario
 
         st.write(f"Fase Lunar Actual: {datos_lunares['nombre_fase_lunar']}")
+        st.write(f"Porcentaje de Luminosidad: {datos_lunares['fase']:.2f}%")
         st.write(f"Constelación: {datos_lunares['constelacion']}")
         st.write(f"Magnitud: {datos_lunares['magnitud']}")
         st.write(f"Distancia: {datos_lunares['distancia_km']:.0f} km")

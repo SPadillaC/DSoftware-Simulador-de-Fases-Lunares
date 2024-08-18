@@ -17,4 +17,9 @@ def obtener_imagen_fase(nombre_fase_lunar: str) -> str:
 
 def mostrar_imagen_fase(nombre_fase_lunar: str, width: int = 300):
     imagen_fase = obtener_imagen_fase(nombre_fase_lunar)
+    
+    if not os.path.exists(imagen_fase):
+        st.error(f"Error: La imagen para la fase '{nombre_fase_lunar}' no se encontró.")
+        imagen_fase = os.path.join("src", "imagenes_fases", "fase_desconocida.jpg")
+    
     st.image(imagen_fase, caption=f"Fase Lunar: {nombre_fase_lunar}", width=width)
